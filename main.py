@@ -16,6 +16,9 @@ class Student:
         else:
             return 'Ошибка'
 
+    def __str__(self):
+        res = f'Всё это херня, главное - {self.name}'
+        return res
 
 class Mentor:
     def __init__(self, name, surname):
@@ -41,7 +44,12 @@ class Reviewer(Mentor):
 
 
 
-# stud = Student('Petr', 'Semenov', 'male')
+
+
+
+stud = Student('Petr', 'Semenov', 'male')
+
+print(stud.name)
 # stud.courses_in_progress += ['Python']
 # stud.courses_in_progress += ['Java']
 # print(stud.name, stud.surname, stud.gender, stud.courses_in_progress)
