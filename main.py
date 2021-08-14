@@ -41,6 +41,14 @@ class Student:
               f'Курсы в процессе изучения: {p}, Завершенные курсы: {z}'
         return res
 
+    def __lt__(self, other):
+        if not isinstance(other, Student):
+            print('Это не студент.')
+            return
+        a = sum(other.grades['Python']) / len(other.grades['Python'])
+        b = sum(self.grades['Python']) / len(self.grades['Python'])
+        return a < b
+
 class Mentor:
     def __init__(self, name, surname):
         self.name = name
@@ -51,6 +59,14 @@ class Lecturer(Mentor):
     def __init__(self, name, surname):
         super().__init__(name, surname)
         self.grades = {}
+
+    def __lt__(self, other):
+        if not isinstance(other, Lecturer):
+            print('Это не лектор.')
+            return
+        a = sum(other.grades['Python']) / len(other.grades['Python'])
+        b = sum(self.grades['Python']) / len(self.grades['Python'])
+        return a < b
 
 class Reviewer(Mentor):
     def rate_hw(self, student, course, grade):
@@ -83,8 +99,8 @@ stud.finished_courses += ['Web']
 stud.courses_in_progress += ['Java']
 stud_1.courses_in_progress += ['Python']
 stud_1.finished_courses += ['Java']
-stud_2.courses_in_progress += ['Web']
-stud_2.courses_in_progress += ['Python']
+stud_2.courses_in_progress += ['Back_end']
+stud_2.courses_in_progress += ['Front_end']
 
 lec.courses_attached += ['Python']
 lec.courses_attached += ['Java']
@@ -107,13 +123,24 @@ rew.rate_hw(stud_2, 'Python', 7)
 rew.rate_hw(stud, 'Python', 6)
 rew.rate_hw(stud_1, 'Python', 10)
 rew.rate_hw(stud_2, 'Python', 10)
+rew.rate_hw(stud, 'Java', 5)
+rew.rate_hw(stud, 'Java', 5)
 
 stud.rate_lec(lec, 'Python', 10)
 stud_1.rate_lec(lec, 'Python', 9)
+stud.rate_lec(lec, 'Java', 6)
+stud.rate_lec(lec, 'Java', 5)
+
+stud_2.rate_lec(lec_1, 'Front_end', 5)
+stud_2.rate_lec(lec_1, 'Front_end', 5)
+stud_2.rate_lec(lec_1, 'Back_end', 10)
+stud_2.rate_lec(lec_1, 'Back_end', 10)
+
 def av_grade_course_stud(students, course):
     i = 0
 
     grad = []
+
     while i < len(students):
         if isinstance(students[i], Student) and (course in students[i].courses_in_progress or students[i].finished_courses):
            grad += students[i].grades[course]
@@ -145,8 +172,9 @@ def av_grade_course_lect(lector, course):
     return (s)
 
 
-all = [rew, rew_1, stud_1, stud_2, stud, lec]
 
-print(av_grade_course_lect(all, 'Python'))
-print(av_grade_course_stud(all, 'Python'))
+
+
+
+
 
